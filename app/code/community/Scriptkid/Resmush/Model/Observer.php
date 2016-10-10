@@ -9,9 +9,13 @@ class Scriptkid_Resmush_Model_Observer
   */
   public function catalogProductGalleryUploadImageAfter($observer)
   {
-      $result = $observer->getEvent()->getResult();
+      $_result = $observer->getEvent()->getResult();
       $_imageName = $_result['name'];
       $_imageFilepath = $_result['path'].$_result['file'];
+      $_helper = Mage::helper('resmush/webservice');
+
+      echo $_helper->callWebservice($_imageFilepath);
+      die();
 
       /* we have our temporary filepath now - from here we need to push through
        * the resmush api and replace the image with the compressed image.
