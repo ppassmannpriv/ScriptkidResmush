@@ -11,5 +11,22 @@
         <class>Scriptkid_Resmush_Helper</class>
       </resmush>
     </helpers>
+    <models>
+      <resmush>
+        <class>Scriptkid_Resmush_Model</class>
+      </resmush>
+    </models>
   </global>
-</config> 
+  <adminhtml>
+    <events>
+      <catalog_product_gallery_upload_image_after>
+        <observers>
+          <resmush>
+            <class>resmush/observer</class>
+            <method>catalogProductGalleryUploadImageAfter</method>
+          </resmush>
+        </observers>
+      </catalog_product_gallery_upload_image_after>
+    </events>
+  </adminhtml>
+</config>
