@@ -12,8 +12,12 @@ class Scriptkid_Resmush_Model_Observer
       $result = $observer->getEvent()->getResult();
       $_imageName = $_result['name'];
       $_imageFilepath = $_result['path'].$_result['file'];
-      var_dump($result);
-      die();
+
+      /* we have our temporary filepath now - from here we need to push through
+       * the resmush api and replace the image with the compressed image.
+       * Saving of the image should be handled by Magento.
+       */
+
   }
 
 }
