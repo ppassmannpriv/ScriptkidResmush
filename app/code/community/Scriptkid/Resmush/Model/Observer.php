@@ -14,8 +14,11 @@ class Scriptkid_Resmush_Model_Observer
       $_imageFilepath = $_result['path'].$_result['file'];
       $_helper = Mage::helper('resmush/webservice');
 
-      echo $_helper->callWebservice($_imageFilepath);
-      die();
+      $_imageData = $_helper->callWebservice($_imageFilepath);
+
+      file_put_contents($_imageFilepath, fopen($_imageData->dest, 'r'));
+
+
 
       /* we have our temporary filepath now - from here we need to push through
        * the resmush api and replace the image with the compressed image.
