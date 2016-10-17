@@ -23,6 +23,8 @@ class Scriptkid_Resmush_Model_Observer
       /* we have our temporary filepath now - from here we need to push through
        * the resmush api and replace the image with the compressed image.
        * Saving of the image should be handled by Magento.
+       * clean this up dude! putting the actual file into the filepath needs to be a function.
+       * single use principle!
        */
 
   }
