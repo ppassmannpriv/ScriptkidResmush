@@ -27,6 +27,14 @@
           </resmush>
         </observers>
       </catalog_product_gallery_upload_image_after>
+      <catalog_category_save_after>
+        <observers>
+          <resmush>
+            <class>resmush/observer</class>
+            <method>catalogCategorySaveAfter</method>
+          </resmush>
+        </observers>
+      </catalog_category_save_after>
     </events>
   </adminhtml>
   <admin>

@@ -26,6 +26,18 @@ class Scriptkid_Resmush_Model_Observer
        * clean this up dude! putting the actual file into the filepath needs to be a function.
        * single use principle!
        */
+  }
+
+  public function catalogCategorySaveAfter($observer)
+  {
+    $_categoryData = $observer->getEvent()->getCategory();
+    $_imageFilepath = Mage::getBaseDir('media').'catalog/category/'.$_categoryData->getImage();
+    $_thumbnailFilepath = Mage::getBaseDir('media').'catalog/category/'.$_categoryData->getThumbnail();
+
+    /* We have the image and thumbnail paths now after save.
+    *  From here we can push them to our webservice - which needs more stuff done
+    *
+    **/
 
   }
 
