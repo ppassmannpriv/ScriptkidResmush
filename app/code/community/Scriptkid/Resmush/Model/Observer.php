@@ -12,9 +12,9 @@ class Scriptkid_Resmush_Model_Observer
       $_result = $observer->getEvent()->getResult();
       $_imageName = $_result['name'];
       $_imageFilepath = $_result['path'].$_result['file'];
-      $_helper = Mage::helper('resmush/webservice');
+      $_webservice = Mage::getModel('resmush/webservice');
 
-      $_imageData = $_helper->callWebservice($_imageFilepath);
+      $_imageData = $_webservice->callWebservice($_imageFilepath);
 
       file_put_contents($_imageFilepath, fopen($_imageData->dest, 'r'));
 
