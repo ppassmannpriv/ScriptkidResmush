@@ -2,6 +2,7 @@
 
 class Scriptkid_Resmush_Model_Webservice
 {
+  protected $_helper;
   protected $_webserviceUrl;
   protected $_logfile;
   protected $_logLevel;
@@ -12,9 +13,10 @@ class Scriptkid_Resmush_Model_Webservice
   */
   public function __construct()
   {
-    $this->_webserviceUrl = 'http://api.resmush.it/ws.php';
-    $this->_logfile = 'scriptkid_resmush.log';
-    $this->_logLevel = 4;
+    $this->_helper = Mage::helper('resmush');
+    $this->_webserviceUrl = $this->_helper->setWebserviceUrl();
+    $this->_logfile = $this->_helper->setLogfile();
+		$this->_logLevel = $this->_helper->setLogLevel();
   }
 
 

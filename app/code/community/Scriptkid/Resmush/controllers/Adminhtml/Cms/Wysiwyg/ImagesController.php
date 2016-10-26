@@ -15,10 +15,10 @@ class Scriptkid_Resmush_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Admi
         $result = $this->getStorage()->uploadFile($targetPath, $this->getRequest()->getParam('type'));
 
         $_imageFilepath = $result['path'].'/'.$result['name'];
-        $_helper = Mage::helper('resmush/webservice');
-        $_imageData = $_helper->callWebservice($_imageFilepath);
+        $_webservice = Mage::getModel('resmush/webservice');
+        $_imageData = $_webservice->callWebservice($_imageFilepath);
         file_put_contents($_imageFilepath, fopen($_imageData->dest, 'r'));
-        
+
     } catch (Exception $e) {
         $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
     }
