@@ -32,7 +32,7 @@ class Scriptkid_Resmush_Model_Webservice
       $_cUrlQuery = $this->buildQuery($_imagePath);
       $_cUrlResult = curl_exec($_cUrlQuery);
       curl_close($_cUrlQuery);
-
+      Mage::log($_imagePath.' has been processed by the Webservice', 6, $this->_logfile);
       return json_decode($_cUrlResult);
 
     } else {

@@ -10,6 +10,9 @@ class Scriptkid_Resmush_Model_Observer
   public function __construct()
   {
     $this->_webservice = Mage::getModel('resmush/webservice');
+    $this->_helper = Mage::helper('resmush');
+    $this->_logfile = $this->_helper->setLogfile();
+		$this->_logLevel = $this->_helper->setLogLevel();
   }
 
   /*
@@ -23,14 +26,9 @@ class Scriptkid_Resmush_Model_Observer
       $_imageFilepath = $_result['path'].$_result['file'];
 
       $_imageData = $this->_webservice->callWebservice($_imageFilepath);
-      Mage::helper('resmush')->saveImageData($_imageData, $_imageFilepath);
+      $this->_helper->saveImageData($_imageData, $_imageFilepath);
 
-      /* we have our temporary filepath now - from here we need to push through
-       * the resmush api and replace the image with the compressed image.
-       * Saving of the image should be handled by Magento.
-       * clean this up dude! putting the actual file into the filepath needs to be a function.
-       * single use principle!
-       */
+
   }
 
   public function catalogCategorySaveAfter($observer)
@@ -39,22 +37,28 @@ class Scriptkid_Resmush_Model_Observer
 
     if($_categoryData->getImage())
     {
-      $_imageFilepath = Mage::getBaseDir('media').'catalog/category/'.$_categoryData->getImage();
+      $_imageFilepath = Mage::getBaseDir('media').'/catalog/category/'.$_categoryData->getImage();
     } else {
       $_imageFilepath = false;
     }
 
     if($_categoryData->getThumbnail())
     {
-      $_thumbnailFilepath = Mage::getBaseDir('media').'catalog/category/'.$_categoryData->getThumbnail();
+      $_thumbnailFilepath = Mage::getBaseDir('media').'/catalog/category/'.$_categoryData->getThumbnail();
     } else {
       $_thumbnailFilepath = false;
     }
 
-    /* We have the image and thumbnail paths now after save.
-    *  From here we can push them to our webservice - which needs more stuff done
-    *
-    **/
+    if($_imageFilepath)
+    {
+      $_imageData = $this->_webservice->callWebservice($_imageFilepath);
+      $this->_helper->saveImageData($_imageData, $_imageFilepath);
+    }
+    if($_thumbnailFilepath)
+    {
+      $_imageData = $this->_webservice->callWebservice($_thumbnailFilepath);
+      $this->_helper->saveImageData($_imageData, $_thumbnailFilepath);
+    }
   }
 
 }

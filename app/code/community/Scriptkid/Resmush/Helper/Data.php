@@ -27,12 +27,17 @@ class Scriptkid_Resmush_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function saveImageData($_imageData, $_imageFilepath)
 	{
-		if(file_put_contents($_imageFilepath, fopen($_imageData->dest, 'r')) === false)
+		if(is_object($_imageData))
 		{
-			Mage::log('saveImageData() failed in Helper Data Class', $this->_logLevel, $this->_logfile);
-			return false;
+			if(file_put_contents($_imageFilepath, fopen($_imageData->dest, 'r')) === false)
+			{
+				Mage::log('saveImageData() failed in Helper Data Class', $this->_logLevel, $this->_logfile);
+				return false;
+			} else {
+				return true;
+			}
 		} else {
-			return true;
+			Mage::log('saveImageData() failed in Helper Data Class - _imageData is not an object - check out the Webservice!', $this->_logLevel, $this->_logfile);
 		}
 	}
 }

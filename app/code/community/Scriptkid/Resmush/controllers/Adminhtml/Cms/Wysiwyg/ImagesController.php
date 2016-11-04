@@ -7,6 +7,11 @@ class Scriptkid_Resmush_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Admi
 
   public function uploadAction()
   {
+    $_webservice = Mage::getModel('resmush/webservice');
+    $_helper = Mage::helper('resmush');
+    $_logfile = $_helper->setLogfile();
+		$_logLevel = $_helper->setLogLevel();
+
     try {
         $result = array();
         $this->_initAction();
@@ -15,11 +20,11 @@ class Scriptkid_Resmush_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Admi
         $result = $this->getStorage()->uploadFile($targetPath, $this->getRequest()->getParam('type'));
 
         $_imageFilepath = $result['path'].'/'.$result['name'];
-        $_webservice = Mage::getModel('resmush/webservice');
         $_imageData = $_webservice->callWebservice($_imageFilepath);
-        file_put_contents($_imageFilepath, fopen($_imageData->dest, 'r'));
+        $_helper->saveImageData($_imageData, $_imageFilepath);
 
     } catch (Exception $e) {
+        Mage::log($e->getMessage(), $_logLevel, $logfile);
         $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
     }
     $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
